@@ -1,0 +1,69 @@
+---
+Language:        Cpp
+BasedOnStyle:  Google
+Standard:        Auto
+ColumnLimit:     80
+
+## =========================
+##  Align
+## =========================
+# ファイル解析によるポインタ位置のフォーマットをしない
+DerivePointerAlignment:       false
+# int* const * x = NULL; のようにフォーマット
+PointerAlignment:             Left
+SpaceAroundPointerQualifiers: After
+# int& x;
+ReferenceAlignment:           Left
+# 配列宣言を揃える
+AlignArrayOfStructures:       Left
+# \ で行をつなぐ時、\を揃える
+AlignEscapedNewlines:         Right
+# コメントを揃える
+AlignTrailingComments:
+  Kind: Always
+# 代入・宣言・マクロ・ビットフィールドはコメントをまたいで揃える
+# 空行区切りの場合は揃えない
+AlignConsecutiveMacros:       AcrossComments
+AlignConsecutiveBitFields:    AcrossComments
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossComments: true
+  PadOperators: true # >>=と=の '=' を揃える
+AlignConsecutiveDeclarations:
+  Enabled: true
+  AcrossComments: true
+  PadOperators: true
+AlignConsecutiveShortCaseStatements:
+  Enabled: true
+
+## =========================
+##  Break
+## =========================
+BreakBeforeBraces: Attach
+# 長い関数呼び出しで、閉じ括弧前で改行
+AlignAfterOpenBracket: BlockIndent
+# 3項演算子の : や ? を行末に
+BreakBeforeTernaryOperators: false
+BreakConstructorInitializers: BeforeComma
+# 複数の文字列リテラルは代入演算子の後で改行
+# （インデントが必要以上に増えるのを防ぐ）
+AlwaysBreakBeforeMultilineStrings: true
+
+## =========================
+##  Indentation
+## =========================
+IndentWidth:          2
+# case文はインデントする
+IndentCaseLabels:     true
+# private/publicなどはスペース1つでインデント
+AccessModifierOffset: -1
+# 名前空間の部分はインデントなし
+NamespaceIndentation: None
+
+## =========================
+##  Short
+## =========================
+# ラムダ式と関数の {} は常に改行
+AllowShortLambdasOnASingleLine:   None
+AllowShortFunctionsOnASingleLine: None
+AllowShortBlocksOnASingleLine:    Empty
