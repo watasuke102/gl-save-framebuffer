@@ -128,17 +128,27 @@ int main() {
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
   glDrawArrays(GL_TRIANGLES, 0, 6);
 
+  // create Pixel Buffer Object
+  GLuint pixel_buffer;
+  glGenBuffers(1, &pixel_buffer);
+  glBindBuffer(GL_PIXEL_PACK_BUFFER, pixel_buffer);
+  glBufferData(
+      GL_PIXEL_PACK_BUFFER, WIDTH * HEIGHT * 4, nullptr, GL_STREAM_READ
+  );
   // get pixels
-  std::vector<GLubyte> pixels(WIDTH * HEIGHT * 4, 0xff);
   glBindFramebuffer(GL_READ_FRAMEBUFFER, frame_buffer);
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-  glReadPixels(0, 0, WIDTH, HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, pixels.data());
+  glReadPixels(0, 0, WIDTH, HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+  auto pixels = (GLubyte*)glMapBufferRange(
+      GL_PIXEL_PACK_BUFFER, 0, WIDTH * HEIGHT * 4, GL_MAP_READ_BIT
+  );
 
   // remove binding
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-  glDisableVertexAttribArray(0);
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+  glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glDisableVertexAttribArray(0);
   glFlush();
 
   // save as BMP
